@@ -13,6 +13,7 @@ class FrameCounter:
         
         self.current_time = time.time()
         if (self.current_time - self.prev_time >= 1):
+            self.print_framerate()
             self.frames = 0
             self.prev_time = self.current_time
         else:
