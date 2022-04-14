@@ -2,7 +2,14 @@ from OpenGL import GL as gl
 import glfw
 
 
+window_size = [300, 200]
+
+
 def framebuffer_size_callback(window, width, height):
+
+    global window_size
+    window_size = [width, height]
+    
     gl.glViewport(0, 0, width, height)
 
 
@@ -16,7 +23,7 @@ def setup():
     glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
     
-    window = glfw.create_window(2000, 1200, "TITLE", None, None)
+    window = glfw.create_window(window_size[0], window_size[1], "TITLE", None, None)
     glfw.make_context_current(window)
     glfw.swap_interval(0)
     gl.glClearColor(0, 0, 0.4, 0)
