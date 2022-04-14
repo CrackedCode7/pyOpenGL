@@ -10,13 +10,17 @@ class Button:
         self.y_min = pos_y - size_y
         self.y_max = pos_y
         
-        self.vertices = [pos_x, pos_y, 0,
-                         pos_x, pos_y-size_y, 0,
-                         pos_x+size_x, pos_y, 0,
+        self.set_vertices()
+    
+    def set_vertices(self):
+        
+        self.vertices = [self.x_min, self.y_max, 0,
+                         self.x_min, self.y_min, 0,
+                         self.x_max, self.y_max, 0,
                          
-                         pos_x, pos_y-size_y, 0,
-                         pos_x+size_x, pos_y-size_y, 0,
-                         pos_x+size_x, pos_y, 0]
+                         self.x_min, self.y_min, 0,
+                         self.x_max, self.y_min, 0,
+                         self.x_max, self.y_max, 0]
     
     def check_intersection(self, point):
         

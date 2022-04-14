@@ -23,10 +23,10 @@ def setup():
     glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
     
-    window = glfw.create_window(window_size[0], window_size[1], "TITLE", None, None)
+    window = glfw.create_window(window_size[0], window_size[1], "FPS", None, None)
     glfw.make_context_current(window)
     glfw.swap_interval(0)
-    gl.glClearColor(0, 0, 0.4, 0)
+    gl.glClearColor(1, 1, 1, 0)
     glfw.set_framebuffer_size_callback(window, framebuffer_size_callback);
     
     return window

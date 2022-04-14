@@ -91,7 +91,7 @@ def main():
             callbacks.mouse_button_was_pressed = False
             button.check_intersection(callbacks.mouse_pressed_location)
 
-        frame_counter.update()
+        frame_counter.update(window)
     
     glfw.terminate()
 

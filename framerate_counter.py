@@ -1,4 +1,5 @@
 import time
+import glfw
 
 
 class FrameCounter:
@@ -9,15 +10,15 @@ class FrameCounter:
         self.current_time = time.time()
         self.frames = 0
     
-    def update(self):
+    def update(self, window):
         
         self.current_time = time.time()
         if (self.current_time - self.prev_time >= 1):
-            self.print_framerate()
+            self.update_framerate(window)
             self.frames = 0
             self.prev_time = self.current_time
         else:
             self.frames += 1
     
-    def print_framerate(self):
-        print("FPS:", self.frames)
+    def update_framerate(self, window):
+        glfw.set_window_title(window, str(self.frames))
