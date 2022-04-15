@@ -54,13 +54,13 @@ def main():
     renderer = Renderer.Renderer()
     renderer.bind_vao()
 
-    renderer.add_vertices(button.vertices)
     renderer.bind_vertex_vbo()
-    renderer.set_vertex_vbo_buffer_data()
+    renderer.set_vertex_vbo_buffer_size()
+    renderer.add_vertex_buffer_data(button.vertices)
 
-    renderer.add_colors(button.colors)
     renderer.bind_color_vbo()
-    renderer.set_color_vbo_buffer_data()
+    renderer.set_color_vbo_buffer_size()
+    renderer.add_color_buffer_data(button.colors)
     
     # -------------------------------------------------------------------------
     # Main loop
@@ -71,7 +71,7 @@ def main():
         gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
 
         # Draw
-        gl.glDrawArrays(gl.GL_TRIANGLES, 0, int(len(button.vertices)/3))
+        renderer.render()
         
         glfw.swap_buffers(window)
         glfw.poll_events()
