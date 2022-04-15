@@ -11,6 +11,7 @@ class Button:
         self.y_max = pos_y
         
         self.set_vertices()
+        self.set_colors()
     
     def set_vertices(self):
         
@@ -21,6 +22,16 @@ class Button:
                          self.x_min, self.y_min, 0,
                          self.x_max, self.y_min, 0,
                          self.x_max, self.y_max, 0]
+    
+    def set_colors(self):
+
+        self.colors = [0, 1, 0,
+                       0, 1, 0,
+                       0, 1, 0,
+
+                       0, 1, 0,
+                       0, 1, 0,
+                       0, 1, 0]
     
     def check_intersection(self, point):
         

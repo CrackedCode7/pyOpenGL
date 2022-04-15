@@ -49,7 +49,7 @@ class Renderer:
             gl.GL_STATIC_DRAW
         )
         gl.glVertexAttribPointer(
-            0,
+            1,
             3,
             gl.GL_FLOAT,
             False,

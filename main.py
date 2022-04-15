@@ -14,8 +14,8 @@ import window_setup
 import framerate_counter
 import shaders
 import Button
-import pixels_to_screen_coords
 import callbacks
+import Renderer
 
 # -----------------------------------------------------------------------------
 # Main function
@@ -50,27 +50,17 @@ def main():
     # -------------------------------------------------------------------------
     
     button = Button.Button(-1, 1, 1, 1)
-    
-    vao = gl.glGenVertexArrays(1)
-    gl.glBindVertexArray(vao)
-    
-    vbo = gl.glGenBuffers(1)
-    gl.glBindBuffer(gl.GL_ARRAY_BUFFER, vbo)
-    gl.glBufferData(
-        gl.GL_ARRAY_BUFFER, 
-        len(button.vertices)*4, 
-        np.array(button.vertices, dtype=np.float32), 
-        gl.GL_STATIC_DRAW
-    )
-    gl.glVertexAttribPointer(
-        0,              # Attribute location
-        3,              # Number of elements in attribute (number of verts, etc.)
-        gl.GL_FLOAT,    # Data type
-        False,          # Normalize?
-        0,              # Stride
-        None            # Offset pointer
-    )
-    gl.glEnableVertexAttribArray(0)
+
+    renderer = Renderer.Renderer()
+    renderer.bind_vao()
+
+    renderer.add_vertices(button.vertices)
+    renderer.bind_vertex_vbo()
+    renderer.set_vertex_vbo_buffer_data()
+
+    renderer.add_colors(button.colors)
+    renderer.bind_color_vbo()
+    renderer.set_color_vbo_buffer_data()
     
     # -------------------------------------------------------------------------
     # Main loop
