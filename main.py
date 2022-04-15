@@ -52,14 +52,7 @@ def main():
     button = Button.Button(-1, 1, 1, 1)
 
     renderer = Renderer.Renderer()
-    renderer.bind_vao()
-
-    renderer.bind_vertex_vbo()
-    renderer.set_vertex_vbo_buffer_size()
     renderer.add_vertex_buffer_data(button.vertices)
-
-    renderer.bind_color_vbo()
-    renderer.set_color_vbo_buffer_size()
     renderer.add_color_buffer_data(button.colors)
     
     # -------------------------------------------------------------------------

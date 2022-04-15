@@ -2,15 +2,18 @@ from OpenGL import GL as gl
 import numpy as np
 
 
+# Usage: Create object, add vertex and color buffer data from other objects, render.
+# Binding of VAO and VBOs has been adding to each function as needed, so no calls
+# to bind buffers are needed in the main program.
 class Renderer:
     
     def __init__(self):
         
         self.vertices = []
-        self.vertex_buffer_size = 256
+        self.vertex_buffer_size = 0
         self.vertex_buffer_used_size = 0
         self.colors = []
-        self.color_buffer_size = 256
+        self.color_buffer_size = 0
         self.color_buffer_used_size = 0
         
         self.vao = gl.glGenVertexArrays(1)
@@ -23,8 +26,13 @@ class Renderer:
     def bind_vertex_vbo(self):
         gl.glBindBuffer(gl.GL_ARRAY_BUFFER, self.vertex_vbo)
     
-    def set_vertex_vbo_buffer_size(self):
-    
+    def set_vertex_vbo_buffer_size(self, size):
+
+        self.vertex_buffer_size = size
+
+        self.bind_vao()
+        self.bind_vertex_vbo()
+
         gl.glBufferData(
             gl.GL_ARRAY_BUFFER, 
             self.vertex_buffer_size, 
@@ -44,8 +52,13 @@ class Renderer:
     def bind_color_vbo(self):
         gl.glBindBuffer(gl.GL_ARRAY_BUFFER, self.color_vbo)
     
-    def set_color_vbo_buffer_size(self):
+    def set_color_vbo_buffer_size(self, size):
     
+        self.color_buffer_size = size
+        
+        self.bind_vao()
+        self.bind_color_vbo()
+        
         gl.glBufferData(
             gl.GL_ARRAY_BUFFER, 
             self.color_buffer_size, 
@@ -63,6 +76,8 @@ class Renderer:
         gl.glEnableVertexAttribArray(1)
     
     def render(self):
+
+        self.bind_vao()
         gl.glDrawArrays(gl.GL_TRIANGLES, 0, int(len(self.vertices)/3))
 
     def add_vertex_buffer_data(self, vertices):
@@ -71,6 +86,7 @@ class Renderer:
 
         self.vertices += vertices
 
+        self.bind_vao()
         self.bind_vertex_vbo()
         gl.glBufferSubData(
             gl.GL_ARRAY_BUFFER,
@@ -96,6 +112,7 @@ class Renderer:
 
         self.colors += colors
 
+        self.bind_vao()
         self.bind_color_vbo()
         gl.glBufferSubData(
             gl.GL_ARRAY_BUFFER,
@@ -120,15 +137,15 @@ class Renderer:
         if (used_size + size_to_be_added >= 2*current_size):
             if buffer_type == "vertex":
                 self.vertex_buffer_size += size_to_be_added
-                self.set_vertex_vbo_buffer_size()
+                self.set_vertex_vbo_buffer_size(self.vertex_buffer_size)
             else:
                 self.color_buffer_size += size_to_be_added
-                self.set_color_vbo_buffer_size()
+                self.set_color_vbo_buffer_size(self.color_buffer_size)
         
         elif (used_size + size_to_be_added > current_size):
             if buffer_type == "vertex":
                 self.vertex_buffer_size *= 2
-                self.set_vertex_vbo_buffer_size()
+                self.set_vertex_vbo_buffer_size(self.vertex_buffer_size)
             else:
                 self.color_buffer_size *= 2
-                self.set_color_vbo_buffer_size()
+                self.set_color_vbo_buffer_size(self.color_buffer_size)
