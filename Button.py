@@ -11,7 +11,7 @@ class Button:
         self.y_max = pos_y
         
         self.set_vertices()
-        self.set_colors()
+        self.set_texture_coords()
     
     def set_vertices(self):
         
@@ -23,15 +23,15 @@ class Button:
                          self.x_max, self.y_min, 0,
                          self.x_max, self.y_max, 0]
     
-    def set_colors(self):
+    def set_texture_coords(self):
 
-        self.colors = [0, 1, 0,
-                       0, 1, 0,
-                       0, 1, 0,
-
-                       0, 1, 0,
-                       0, 1, 0,
-                       0, 1, 0]
+        self.texture_coords = [0, 512,
+                               0, 496,
+                               16, 512,
+                               
+                               0, 496,
+                               16, 496,
+                               16, 512]
     
     def check_intersection(self, point):
         

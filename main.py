@@ -16,6 +16,7 @@ import shaders
 import Button
 import callbacks
 import Renderer
+import textures
 
 # -----------------------------------------------------------------------------
 # Main function
@@ -42,8 +43,16 @@ def main():
     # Shader setup/activation
     # -------------------------------------------------------------------------
     
-    shader_program = shaders.compile_shader_program()
-    gl.glUseProgram(shader_program)
+    shader = shaders.Shader(shaders.vertex_shader_source, 
+                            shaders.fragment_shader_source)
+    shader.use()
+    
+    # -------------------------------------------------------------------------
+    # Texture setup
+    # -------------------------------------------------------------------------
+    
+    texture = textures.Texture("textures.png")
+    shader.set_vec2("textureSize", [texture.width, texture.height])
     
     # -------------------------------------------------------------------------
     # Buffer Objects setup
@@ -54,10 +63,9 @@ def main():
 
     renderer = Renderer.Renderer()
     renderer.add_vertex_buffer_data(button.vertices)
-    renderer.add_color_buffer_data(button.colors)
+    renderer.add_texture_buffer_data(button.texture_coords)
     renderer.add_vertex_buffer_data(button1.vertices)
-    renderer.add_color_buffer_data(button1.colors)
-    
+    renderer.add_texture_buffer_data(button1.texture_coords)
     
     # -------------------------------------------------------------------------
     # Main loop
