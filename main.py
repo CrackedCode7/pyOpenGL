@@ -50,10 +50,14 @@ def main():
     # -------------------------------------------------------------------------
     
     button = Button.Button(-1, 1, 1, 1)
+    button1 = Button.Button(0, 0, 1, 1)
 
     renderer = Renderer.Renderer()
     renderer.add_vertex_buffer_data(button.vertices)
     renderer.add_color_buffer_data(button.colors)
+    renderer.add_vertex_buffer_data(button1.vertices)
+    renderer.add_color_buffer_data(button1.colors)
+    
     
     # -------------------------------------------------------------------------
     # Main loop
@@ -73,6 +77,7 @@ def main():
         
             callbacks.mouse_button_was_pressed = False
             button.check_intersection(callbacks.mouse_pressed_location)
+            button1.check_intersection(callbacks.mouse_pressed_location)
 
         frame_counter.update(window)
     

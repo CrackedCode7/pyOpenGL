@@ -2,7 +2,7 @@ from OpenGL import GL as gl
 import glfw
 
 
-window_size = [1000, 700]
+window_size = [300, 200]
 
 
 def framebuffer_size_callback(window, width, height):

@@ -19,6 +19,9 @@ class Renderer:
         self.vao = gl.glGenVertexArrays(1)
         self.vertex_vbo = gl.glGenBuffers(1)
         self.color_vbo = gl.glGenBuffers(1)
+        
+        #self.set_vertex_vbo_buffer_size(self.vertex_buffer_size)
+        #self.set_color_vbo_buffer_size(self.color_buffer_size)
     
     def bind_vao(self): 
         gl.glBindVertexArray(self.vao)
@@ -80,21 +83,30 @@ class Renderer:
         self.bind_vao()
         gl.glDrawArrays(gl.GL_TRIANGLES, 0, int(len(self.vertices)/3))
 
-    def add_vertex_buffer_data(self, vertices):
+    def add_vertex_buffer_data(self, vertices, existing_data=False):
         
-        self.update_buffer_size("vertex", self.vertex_buffer_size, self.vertex_buffer_used_size, len(vertices)*4)
-
-        self.vertices += vertices
-
         self.bind_vao()
         self.bind_vertex_vbo()
-        gl.glBufferSubData(
-            gl.GL_ARRAY_BUFFER,
-            self.vertex_buffer_used_size,
-            len(vertices)*4,
-            np.array(vertices, dtype=np.float32)
-        )
-        self.vertex_buffer_used_size += len(vertices)*4
+        
+        if not existing_data:
+            self.update_buffer_size("vertex", self.vertex_buffer_size, self.vertex_buffer_used_size, len(vertices)*4)
+            self.vertices += vertices
+
+            gl.glBufferSubData(
+                gl.GL_ARRAY_BUFFER,
+                self.vertex_buffer_used_size,
+                len(vertices)*4,
+                np.array(vertices, dtype=np.float32)
+            )
+            self.vertex_buffer_used_size += len(vertices)*4
+        
+        else:
+            gl.glBufferSubData(
+                gl.GL_ARRAY_BUFFER,
+                0,
+                len(vertices)*4,
+                np.array(vertices, dtype=np.float32)
+            )
 
         gl.glVertexAttribPointer(
             0,
@@ -106,22 +118,31 @@ class Renderer:
         )
         gl.glEnableVertexAttribArray(0)
 
-    def add_color_buffer_data(self, colors):
-
-        self.update_buffer_size("colors", self.color_buffer_size, self.color_buffer_used_size, len(colors)*4)
-
-        self.colors += colors
-
+    def add_color_buffer_data(self, colors, existing_data=False):
+        
         self.bind_vao()
         self.bind_color_vbo()
-        gl.glBufferSubData(
-            gl.GL_ARRAY_BUFFER,
-            self.color_buffer_used_size,
-            len(colors)*4,
-            np.array(colors, dtype=np.float32)
-        )
-        self.color_buffer_used_size += len(colors)*4
+        
+        if not existing_data:
+            self.update_buffer_size("colors", self.color_buffer_size, self.color_buffer_used_size, len(colors)*4)
+            self.colors += colors
 
+            gl.glBufferSubData(
+                gl.GL_ARRAY_BUFFER,
+                self.color_buffer_used_size,
+                len(colors)*4,
+                np.array(colors, dtype=np.float32)
+            )
+            self.color_buffer_used_size += len(colors)*4
+        
+        else:
+            gl.glBufferSubData(
+                gl.GL_ARRAY_BUFFER,
+                0,
+                len(colors)*4,
+                np.array(colors, dtype=np.float32)
+            )
+        
         gl.glVertexAttribPointer(
             1,
             3,
@@ -138,14 +159,18 @@ class Renderer:
             if buffer_type == "vertex":
                 self.vertex_buffer_size += size_to_be_added
                 self.set_vertex_vbo_buffer_size(self.vertex_buffer_size)
+                self.add_vertex_buffer_data(self.vertices, existing_data=True)
             else:
                 self.color_buffer_size += size_to_be_added
                 self.set_color_vbo_buffer_size(self.color_buffer_size)
+                self.add_color_buffer_data(self.colors, existing_data=True)
         
         elif (used_size + size_to_be_added > current_size):
             if buffer_type == "vertex":
                 self.vertex_buffer_size *= 2
                 self.set_vertex_vbo_buffer_size(self.vertex_buffer_size)
+                self.add_vertex_buffer_data(self.vertices, existing_data=True)
             else:
                 self.color_buffer_size *= 2
                 self.set_color_vbo_buffer_size(self.color_buffer_size)
+                self.add_color_buffer_data(self.colors, existing_data=True)
