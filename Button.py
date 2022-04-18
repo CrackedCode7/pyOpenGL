@@ -3,7 +3,7 @@ import window_setup
 
 class Button:
 
-    def __init__(self, pos_x, pos_y, size_x, size_y):
+    def __init__(self, pos_x, pos_y, size_x, size_y, color=[1, 1, 1]):
         
         self.x_min = pos_x
         self.x_max = pos_x + size_x
@@ -12,6 +12,7 @@ class Button:
         
         self.set_vertices()
         self.set_texture_coords()
+        self.set_colors(color)
     
     def set_vertices(self):
         
@@ -26,12 +27,22 @@ class Button:
     def set_texture_coords(self):
 
         self.texture_coords = [0, 512,
-                               0, 496,
-                               16, 512,
+                               0, 504,
+                               8, 512,
                                
-                               0, 496,
-                               16, 496,
-                               16, 512]
+                               0, 504,
+                               8, 504,
+                               8, 512]
+    
+    def set_colors(self, color):
+        
+        self.colors = [color[0], color[1], color[2],
+                       color[0], color[1], color[2],
+                       color[0], color[1], color[2],
+                       
+                       color[0], color[1], color[2],
+                       color[0], color[1], color[2],
+                       color[0], color[1], color[2]]
     
     def check_intersection(self, point):
         

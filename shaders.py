@@ -8,13 +8,16 @@ vertex_shader_source = """
 
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aTexCoord;
+layout (location = 2) in vec3 aColor;
 
 out vec2 TexCoord;
+out vec4 Color;
 
 void main()
 {
 	gl_Position = vec4(aPos, 1.0f);
     TexCoord = aTexCoord;
+    Color = vec4(aColor, 1.0f);
 }
 
 """
@@ -23,6 +26,7 @@ fragment_shader_source = """
 #version 330 core
 
 in vec2 TexCoord;
+in vec4 Color;
 
 out vec4 FragColor;
 
@@ -31,7 +35,7 @@ uniform vec2 textureSize;
 
 void main()
 {
-	FragColor = texture(ourTexture, TexCoord/textureSize);
+	FragColor = texture(ourTexture, TexCoord/textureSize) * Color;
 }
 """
 

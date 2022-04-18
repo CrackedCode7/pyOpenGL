@@ -2,7 +2,7 @@ from OpenGL import GL as gl
 import glfw
 
 
-window_size = [300, 200]
+window_size = [200, 200]
 
 
 def framebuffer_size_callback(window, width, height):
@@ -26,7 +26,7 @@ def setup():
     window = glfw.create_window(window_size[0], window_size[1], "FPS", None, None)
     glfw.make_context_current(window)
     glfw.swap_interval(0)
-    gl.glClearColor(1, 1, 1, 0)
+    gl.glClearColor(0, 0, 0, 0)
     glfw.set_framebuffer_size_callback(window, framebuffer_size_callback);
     
     return window
