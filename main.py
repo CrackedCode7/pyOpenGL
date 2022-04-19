@@ -17,6 +17,7 @@ import Button
 import callbacks
 import Renderer
 import textures
+import Line
 
 # -----------------------------------------------------------------------------
 # Main function
@@ -65,6 +66,11 @@ def main():
     renderer.add_texture_buffer_data(button.texture_coords)
     renderer.add_color_buffer_data(button.colors)
     
+    line = Line.Line([100, 0], [200, 100], 10, pixel_coords=True)
+    renderer.add_vertex_buffer_data(line.vertices)
+    renderer.add_texture_buffer_data(line.texture_coords)
+    renderer.add_color_buffer_data(line.colors)
+    
     # -------------------------------------------------------------------------
     # Main loop
     # -------------------------------------------------------------------------
@@ -83,7 +89,6 @@ def main():
         
             callbacks.mouse_button_was_pressed = False
             button.check_intersection(callbacks.mouse_pressed_location)
-            button1.check_intersection(callbacks.mouse_pressed_location)
 
         frame_counter.update(window)
     
