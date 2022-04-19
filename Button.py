@@ -37,4 +37,7 @@ class Button(TexturedObject):
         if ((point_coords[0] > self.x_min and point_coords[0] < self.x_max) and
             (point_coords[1] > self.y_min and point_coords[1] < self.y_max)):
            
-            print("INSIDE BUTTON")
+            self.action()
+    
+    def action(self):
+        print("BUTTON PRESSED")

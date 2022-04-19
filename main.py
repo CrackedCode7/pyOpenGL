@@ -18,6 +18,8 @@ import callbacks
 import Renderer
 import textures
 import Line
+import TexturedObject
+import Character
 
 # -----------------------------------------------------------------------------
 # Main function
@@ -60,17 +62,12 @@ def main():
     # Buffer Objects setup
     # -------------------------------------------------------------------------
     
-    button = Button.Button(-1, 1, 1, 1, 0, 512, 8, 8, color=[0, 1, 0])
-
     renderer = Renderer.Renderer()
-    renderer.add_vertex_buffer_data(button.vertices)
-    renderer.add_texture_buffer_data(button.texture_coords)
-    renderer.add_color_buffer_data(button.colors)
     
-    line = Line.Line([100, 0], [200, 100], 10, pixel_coords=True)
-    renderer.add_vertex_buffer_data(line.vertices)
-    renderer.add_texture_buffer_data(line.texture_coords)
-    renderer.add_color_buffer_data(line.colors)
+    letter = Character.Character(-1, 1, 1, 1, "G", color=[0, 1, 0])
+    renderer.add_vertex_buffer_data(letter.vertices)
+    renderer.add_texture_buffer_data(letter.texture_coords)
+    renderer.add_color_buffer_data(letter.colors)
     
     # -------------------------------------------------------------------------
     # Main loop
@@ -89,7 +86,6 @@ def main():
         if (callbacks.mouse_button_was_pressed is True):
         
             callbacks.mouse_button_was_pressed = False
-            button.check_intersection(callbacks.mouse_pressed_location)
 
         frame_counter.update(window)
     

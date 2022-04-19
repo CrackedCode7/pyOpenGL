@@ -4,7 +4,12 @@ import numpy as np
 
 class Line:
     
-    def __init__(self, start_coords, end_coords, line_width, pixel_coords=False, color=[1, 1, 1]):
+    def __init__(self,
+                 start_coords, 
+                 end_coords, 
+                 line_width=1, 
+                 pixel_coords=False, 
+                 color=[1, 1, 1]):
         
         if pixel_coords:
             self.start_coords = pixels_to_screen_coords.pixels_to_screen_coords(
