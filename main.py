@@ -31,6 +31,7 @@ def main():
     
     window = window_setup.setup()
     gl.glEnable(gl.GL_DEPTH_TEST)
+    gl.glEnable(gl.GL_CULL_FACE)
 
     glfw.set_mouse_button_callback(window, callbacks.mouse_button_callback)
     
@@ -59,7 +60,7 @@ def main():
     # Buffer Objects setup
     # -------------------------------------------------------------------------
     
-    button = Button.Button(-1, 1, 1, 1, color=[0, 1, 0])
+    button = Button.Button(-1, 1, 1, 1, 0, 512, 8, 8, color=[0, 1, 0])
 
     renderer = Renderer.Renderer()
     renderer.add_vertex_buffer_data(button.vertices)
